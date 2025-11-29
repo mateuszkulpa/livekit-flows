@@ -1,14 +1,18 @@
 import logging
 from typing import Any
 from jsonschema import ValidationError, Draft7Validator
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 
 
 def validate_against_schema(
-    data: dict[str, Any], schema: dict[str, Any]
+    data: dict[str, Any], schema: dict[str, Any] | type[BaseModel]
 ) -> tuple[bool, str | None]:
     try:
+        if isinstance(schema, type) and issubclass(schema, BaseModel):
+            schema = schema.model_json_schema()
+
         validator = Draft7Validator(schema)
         validator.validate(data)
 

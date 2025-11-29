@@ -50,7 +50,7 @@ class ToolFactory:
         for edge in node.edges:
             if edge.input_schema:
                 tools.append(self.build_data_collection_tool(edge))
-            else:
+            elif edge.target_node_id:
                 tools.append(self.build_transition_tool(edge.id, edge.target_node_id))
 
         return tools

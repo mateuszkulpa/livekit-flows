@@ -80,4 +80,4 @@ def generate_userdata_class(
     if not field_definitions:
         return create_model(class_name)
 
-    return create_model(class_name, **field_definitions)
+    return create_model(class_name, **field_definitions)  # type: ignore[call-overload]
