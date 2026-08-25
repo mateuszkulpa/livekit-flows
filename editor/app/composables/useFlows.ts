@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { useStorage } from '@vueuse/core'
+import YAML from 'yaml'
 import type { ConversationFlow, FlowNode, NodePositionMap } from '@/types/flow'
 import { welcomeFlow, welcomeFlowPositions } from './welcomeFlow'
 
