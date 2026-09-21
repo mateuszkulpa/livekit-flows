@@ -229,7 +229,7 @@ async def test_on_enter_renders_instruction_and_static_text():
     flow = reservation_flow()
     agent = FlowAgent(flow=flow)
     session = attach_session(agent)
-    session.userdata = agent._userdata_class(name="Ada")
+    session.userdata = agent._userdata_class.model_validate({"name": "Ada"})
 
     await agent.on_enter()
 
@@ -237,7 +237,7 @@ async def test_on_enter_renders_instruction_and_static_text():
 
     details = FlowAgent(flow=flow, current_node=flow.nodes[1])
     details_session = attach_session(details)
-    details_session.userdata = agent._userdata_class(name="Ada")
+    details_session.userdata = agent._userdata_class.model_validate({"name": "Ada"})
 
     await details.on_enter()
 
@@ -340,7 +340,9 @@ async def test_end_session_waits_for_speech_and_deletes_the_room():
         await end_session(cast(Any, Handle()))
 
     assert awaited is True
-    request = delete_room.await_args.args[0]
+    call = delete_room.await_args
+    assert call is not None
+    request = call.args[0]
     assert isinstance(request, api.DeleteRoomRequest)
     assert request.room == "room-1"
 

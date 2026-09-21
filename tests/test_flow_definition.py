@@ -95,7 +95,7 @@ def test_generate_userdata_class_merges_schemas_and_keeps_first_definition():
     assert user_data_cls.model_fields["party_size"].default is None
     assert user_data_cls.model_fields["notes"].is_required()
 
-    guest = user_data_cls(name="Ada", notes="window")
+    guest = user_data_cls.model_validate({"name": "Ada", "notes": "window"})
     assert guest.model_dump() == {
         "name": "Ada",
         "party_size": None,
