@@ -1,6 +1,7 @@
 import logging
 from typing import Any
-from jsonschema import ValidationError, Draft7Validator
+
+from jsonschema import Draft7Validator, ValidationError
 from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
@@ -23,8 +24,8 @@ def validate_against_schema(
         )
         logger.warning(f"Schema validation failed: {error_msg}")
         return False, error_msg
-    except Exception as e:
-        error_msg = f"Unexpected validation error: {str(e)}"
+    except Exception as e:  # noqa: BLE001
+        error_msg = f"Unexpected validation error: {e!s}"
         logger.error(error_msg)
         return False, error_msg
 
@@ -33,6 +34,6 @@ def is_valid_json_schema(schema: dict[str, Any]) -> bool:
     try:
         Draft7Validator.check_schema(schema)
         return True
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.warning(f"Invalid JSON Schema: {e}")
         return False

@@ -1,12 +1,13 @@
 import pytest
-from pydantic import BaseModel, Field
 from livekit.agents import AgentSession
 from livekit.plugins import openai
+from pydantic import BaseModel, Field
+
 from livekit_flows import (
-    FlowAgent,
     ConversationFlow,
-    FlowNode,
     Edge,
+    FlowAgent,
+    FlowNode,
 )
 
 

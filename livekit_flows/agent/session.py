@@ -1,7 +1,8 @@
+import logging
+
 from livekit import api
 from livekit.agents import get_job_context
 from livekit.agents.voice import SpeechHandle
-import logging
 
 logger = logging.getLogger(__name__)
 

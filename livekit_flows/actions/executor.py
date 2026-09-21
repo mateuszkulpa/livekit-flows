@@ -1,7 +1,8 @@
-from typing import Any, Optional
-import aiohttp
 import json
 import logging
+from typing import Any
+
+import aiohttp
 from pydantic import BaseModel
 
 from ..core import CustomAction
@@ -21,7 +22,7 @@ class ActionExecutor:
         self.actions = {action.id: action for action in actions}
         self.environment_vars = environment_vars or {}
         self.action_results: dict[str, Any] = {}
-        self._http_session: Optional[aiohttp.ClientSession] = None
+        self._http_session: aiohttp.ClientSession | None = None
         self.template_renderer = TemplateRenderer()
 
     async def __aenter__(self):
@@ -95,7 +96,7 @@ class ActionExecutor:
                 )
                 return response_data
 
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Action {action_id} failed: {e}")
             error_result = {"success": False, "error": str(e), "status": 500}
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from livekit.agents import function_tool, RunContext
+from livekit.agents import RunContext, function_tool
+
 from ..core import Edge, FlowNode
 
 

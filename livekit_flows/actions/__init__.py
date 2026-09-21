@@ -1,8 +1,8 @@
-from ..core import CustomAction, ActionTrigger
+from ..core import ActionTrigger, CustomAction
 from .executor import ActionExecutor
 
 __all__ = [
-    "CustomAction",
-    "ActionTrigger",
     "ActionExecutor",
+    "ActionTrigger",
+    "CustomAction",
 ]

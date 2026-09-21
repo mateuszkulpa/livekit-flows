@@ -1,15 +1,16 @@
-from typing import Self, Union, Any
 from pathlib import Path
+from typing import Any, Self
 
 from pydantic import BaseModel, Field, field_validator
-from .enums import HttpMethod, ActionTriggerType
+
 from ..loaders import (
-    load_from_yaml_file,
-    load_from_yaml_string,
+    load_from_file,
     load_from_json_file,
     load_from_json_string,
-    load_from_file,
+    load_from_yaml_file,
+    load_from_yaml_string,
 )
+from .enums import ActionTriggerType, HttpMethod
 
 
 class CustomAction(BaseModel):
@@ -75,7 +76,7 @@ class ConversationFlow(BaseModel):
     environment_variables: dict[str, str] = Field(default_factory=dict)
 
     @classmethod
-    def from_yaml_file(cls, file_path: Union[str, Path]) -> Self:
+    def from_yaml_file(cls, file_path: str | Path) -> Self:
         return load_from_yaml_file(cls, file_path)
 
     @classmethod
@@ -83,7 +84,7 @@ class ConversationFlow(BaseModel):
         return load_from_yaml_string(cls, yaml_string)
 
     @classmethod
-    def from_json_file(cls, file_path: Union[str, Path]) -> Self:
+    def from_json_file(cls, file_path: str | Path) -> Self:
         return load_from_json_file(cls, file_path)
 
     @classmethod
@@ -91,5 +92,5 @@ class ConversationFlow(BaseModel):
         return load_from_json_string(cls, json_string)
 
     @classmethod
-    def from_file(cls, file_path: Union[str, Path]) -> Self:
+    def from_file(cls, file_path: str | Path) -> Self:
         return load_from_file(cls, file_path)

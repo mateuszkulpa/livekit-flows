@@ -1,11 +1,13 @@
+from typing import Any
+
 from pydantic import BaseModel, Field, create_model
-from typing import Optional, Type, Any
+
 from ..core import ConversationFlow
 
 
 def _get_python_type_from_json_schema(
     schema_type: str, schema_format: str | None = None
-) -> Type:
+) -> type:
     """Convert JSON Schema type to Python type"""
     type_mapping = {
         "string": str,
@@ -19,7 +21,7 @@ def _get_python_type_from_json_schema(
 
 
 def _extract_fields_from_schema(
-    schema: dict[str, Any] | Type[BaseModel],
+    schema: dict[str, Any] | type[BaseModel],
 ) -> dict[str, tuple]:
     """Extract field definitions from a JSON Schema or Pydantic model"""
     field_definitions = {}
@@ -46,7 +48,7 @@ def _extract_fields_from_schema(
             field_type = base_type
             field_definition = Field(description=description)
         else:
-            field_type = Optional[base_type]
+            field_type = base_type | None
             field_definition = Field(default=None, description=description)
 
         field_definitions[field_name] = (field_type, field_definition)
@@ -73,11 +75,11 @@ def _build_field_map_from_schemas(flow: ConversationFlow) -> dict[str, tuple]:
 
 def generate_userdata_class(
     flow: ConversationFlow, class_name: str = "FlowUserData"
-) -> Type[BaseModel]:
+) -> type[BaseModel]:
     """Generate a Pydantic model class from all input schemas in the flow"""
     field_definitions = _build_field_map_from_schemas(flow)
 
     if not field_definitions:
         return create_model(class_name)
 
-    return create_model(class_name, **field_definitions)  # type: ignore[call-overload]
+    return create_model(class_name, **field_definitions)  # ty: ignore[no-matching-overload]

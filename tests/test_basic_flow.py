@@ -1,8 +1,8 @@
 import pytest
 from livekit.agents import AgentSession
 from livekit.plugins import openai
-from livekit_flows import FlowAgent, ConversationFlow, FlowNode, Edge
 
+from livekit_flows import ConversationFlow, Edge, FlowAgent, FlowNode
 
 reservation_flow = ConversationFlow(
     system_prompt="You are a conversational voice agent that takes restaurant reservations. Be friendly and get: name, party size, date, time.",

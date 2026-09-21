@@ -86,7 +86,11 @@ reservation_flow = ConversationFlow(
             instruction="Confirm all reservation details with the user.",
             edges=[
                 Edge(condition="Confirmed", id="to_done", target_node_id="done"),
-                Edge(condition="Need changes", id="to_details", target_node_id="get_details"),
+                Edge(
+                    condition="Need changes",
+                    id="to_details",
+                    target_node_id="get_details",
+                ),
             ],
         ),
         FlowNode(
@@ -97,6 +101,7 @@ reservation_flow = ConversationFlow(
         ),
     ],
 )
+
 
 async def entrypoint(ctx: JobContext):
     await ctx.connect()
@@ -110,6 +115,7 @@ async def entrypoint(ctx: JobContext):
     )
 
     await session.start(agent=agent, room=ctx.room)
+
 
 if __name__ == "__main__":
     cli.run_app(WorkerOptions(entrypoint_fnc=entrypoint))

@@ -1,18 +1,18 @@
 import pytest
+from aiohttp.web import Application, json_response
 from livekit.agents import AgentSession
 from livekit.plugins import openai
+
 from livekit_flows import (
-    FlowAgent,
-    ConversationFlow,
-    FlowNode,
-    Edge,
-    CustomAction,
-    HttpMethod,
     ActionTrigger,
     ActionTriggerType,
+    ConversationFlow,
+    CustomAction,
+    Edge,
+    FlowAgent,
+    FlowNode,
+    HttpMethod,
 )
-from aiohttp.web import Application, json_response
-
 
 create_profile_action = CustomAction(
     id="create_user_profile",
@@ -266,7 +266,7 @@ async def test_action_user_profile_creation_with_real_api(
         await session.run(user_input="vegetarian")
         final_response = await session.run(user_input="moderate")
 
-        final_response.expect.contains_message(role="assistant").judge(
+        await final_response.expect.contains_message(role="assistant").judge(
             llm,
             intent="Should inform user that their profile has been created successfully and profile id is 123",
         )

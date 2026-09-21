@@ -1,14 +1,15 @@
-from livekit.agents import Agent, ChatContext
-from livekit.agents.voice import SpeechHandle
 import asyncio
 import logging
 
-from ..core import ConversationFlow, FlowNode, ActionTriggerType
+from livekit.agents import Agent, ChatContext
+from livekit.agents.voice import SpeechHandle
+
 from ..actions import ActionExecutor
-from ..utils import generate_userdata_class, validate_against_schema
-from .tools import ToolFactory
-from .session import end_session
+from ..core import ActionTriggerType, ConversationFlow, FlowNode
 from ..templates import TemplateRenderer
+from ..utils import generate_userdata_class, validate_against_schema
+from .session import end_session
+from .tools import ToolFactory
 
 logger = logging.getLogger(__name__)
 
@@ -125,7 +126,7 @@ class FlowAgent(Agent):
         if tasks:
             try:
                 await asyncio.gather(*tasks, return_exceptions=True)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 logger.error(f"Error executing node actions: {e}")
 
     def _render_instruction(self, instruction: str) -> str:

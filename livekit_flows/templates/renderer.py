@@ -1,7 +1,8 @@
-from typing import Any
-from jinja2 import Environment, BaseLoader
-from pydantic import BaseModel
 import logging
+from typing import Any
+
+from jinja2 import BaseLoader, Environment
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,7 @@ class TemplateRenderer:
         try:
             template = self.jinja_env.from_string(template_str)
             return template.render(**context)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Template rendering error: {e}")
             return template_str
 
