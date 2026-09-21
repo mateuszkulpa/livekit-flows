@@ -55,6 +55,7 @@ reservation_flow = ConversationFlow(
 )
 
 
+@pytest.mark.requires_credentials
 @pytest.mark.asyncio
 async def test_complete_reservation_flow(mock_job_context):
     """Test the complete reservation flow from start to finish."""
@@ -86,6 +87,7 @@ async def test_complete_reservation_flow(mock_job_context):
         )
 
 
+@pytest.mark.requires_credentials
 @pytest.mark.asyncio
 async def test_reservation_flow_with_corrections(mock_job_context):
     """Test the reservation flow when user wants to make corrections."""

@@ -210,6 +210,7 @@ user_profile_flow = ConversationFlow(
 )
 
 
+@pytest.mark.requires_credentials
 @pytest.mark.asyncio
 async def test_action_user_profile_creation_with_real_api(
     aiohttp_server, mock_job_context

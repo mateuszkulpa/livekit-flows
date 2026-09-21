@@ -85,6 +85,7 @@ survey_flow = ConversationFlow(
 )
 
 
+@pytest.mark.requires_credentials
 @pytest.mark.asyncio
 async def test_data_collection_flow(mock_job_context):
     async with (

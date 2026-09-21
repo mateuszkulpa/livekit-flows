@@ -48,6 +48,9 @@ default-groups = ["dev", "examples"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+markers = [
+    "requires_credentials: calls external LLM APIs and is not run in GitHub Actions",
+]
 
 [dependency-groups]
 dev = [
